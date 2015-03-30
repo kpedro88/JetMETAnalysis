@@ -1,4 +1,3 @@
-<use   name="JetMETAnalysis/JetAnalyzers"/>
 <use   name="JetMETAnalysis/JetUtilities"/>
 <use   name="CondFormats/JetMETObjects"/>
 <use   name="PhysicsTools/Utilities"/>
