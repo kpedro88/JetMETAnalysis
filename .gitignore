@@ -1,1 +1,3 @@
+JetAnalyzers/test/batch
 *.pyc
+*.root
