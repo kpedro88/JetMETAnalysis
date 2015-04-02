@@ -394,6 +394,11 @@ void MatchEventsAndJets::DeclareHistograms() {
    histograms["p_matchedjet_off"] = new TProfile("p_matchedjet_off","p_matchedjet_off;<p_{T} Offset>_{jets} (GeV);# of matched jets",80,0,80);
    histograms["p_drVsrefpt"]      = new TProfile("p_drVsrefpt","p_drVsrefpt;p_{T}^{GEN};d_{R}",NPtBins, vpt);        //ZQ
 
+   histograms["p_off_eta"]        = new TProfile("p_off_eta","p_off_eta;#eta_{j};Offset",NETA, veta);
+   histograms["p_off_JetPt"]      = new TProfile("p_off_JetPt","p_off_JetPt;p_{T}^{pu};Offset",NPtBins, vpt);
+   histograms["p_offOverA_eta"]   = new TProfile("p_offOverA_eta","p_offOverA_eta;#eta_{j};OffsetOverArea",NETA, veta);
+   histograms["p_offOverA_JetPt"] = new TProfile("p_offOverA_JetPt","p_offOverA_JetPt;p_{T}^{pu};OffsetOverArea",NPtBins, vpt);
+   
    histograms["p_off_etaVsNpv"]        = new TProfile2D("p_off_etaVsNpv","p_off_etaVsNpv;#eta_{j};N_{PV};Offset (p_{T}, GeV)",NETA, veta, 50,0,50);
    histograms["p_off_etaVsRho"]        = new TProfile2D("p_off_etaVsRho","p_off_etaVsRho;#eta_{j};Rho;Offset (p_{T}, GeV)",NETA, veta, 50,0,50);
    histograms["p_off_etaVspueff"]      = new TProfile2D("p_off_etaVsPUEff","p_off_etaVsPUEff;#eta_{j};PU_{Eff};Offset (p_{T}, GeV)",NETA, veta, 75,0,75);
@@ -833,6 +838,10 @@ bool MatchEventsAndJets::FillHistograms() {
     double offsetOA      = offset / tpu->jtarea[jpu];
     double offsetOrefpt  = offset / tpu->refpt[jpu];
         
+	dynamic_cast<TProfile*>(histograms["p_off_eta"])              ->Fill(tpu->jteta[jpu],offset);
+	dynamic_cast<TProfile*>(histograms["p_off_JetPt"])              ->Fill(tpu->jtpt[jpu],offset);
+	dynamic_cast<TProfile*>(histograms["p_offOverA_eta"])              ->Fill(tpu->jteta[jpu],offsetOA);
+	dynamic_cast<TProfile*>(histograms["p_offOverA_JetPt"])              ->Fill(tpu->jtpt[jpu],offsetOA);
     dynamic_cast<TProfile2D*>(histograms["p_off_etaVsNpv"])                ->Fill(tpu->jteta[jpu],tpu->npv,offset);
     dynamic_cast<TProfile2D*>(histograms["p_off_etaVsRho"])                ->Fill(tpu->jteta[jpu],tpu->rho,offset);
     dynamic_cast<TProfile2D*>(histograms["p_off_etaVspueff"])              ->Fill(tpu->jteta[jpu],PUEff,offset);
