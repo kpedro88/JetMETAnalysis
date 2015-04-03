@@ -158,8 +158,9 @@ int main(int argc,char**argv)
       }
     
     TTree*      itree=(TTree*)idir->Get("t");    
-    TDirectory* odir =(TDirectory*)ofile->mkdir(idir->GetName()); odir->cd();
-    itree->CloneTree()->Write();
+    //do not re-save original directory & tree
+    //TDirectory* odir =(TDirectory*)ofile->mkdir(idir->GetName()); odir->cd();
+    //itree->CloneTree()->Write();
     
     itree->SetBranchStatus("jtpt",0);
     itree->SetBranchStatus("jte", 0);
@@ -169,7 +170,7 @@ int main(int argc,char**argv)
     
     stringstream ssodirname; ssodirname<<alg;
     for (unsigned int i=0;i<levels.size();i++) ssodirname<<"l"<<levels[i];
-    odir=(TDirectory*)ofile->mkdir(ssodirname.str().c_str()); odir->cd();
+    TDirectory* odir=(TDirectory*)ofile->mkdir(ssodirname.str().c_str()); odir->cd();
     unsigned char nref;
     float         jtpt[100];
     float         jteta[100];
