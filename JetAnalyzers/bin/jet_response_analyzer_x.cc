@@ -207,11 +207,11 @@ int main(int argc,char**argv)
   //
   // open input/output files and loop over input directories/trees (=algorithms!)
   //
-  TFile* ifile = new TFile(input.c_str(),"READ");
-  if (!ifile->IsOpen()) {  cout<<"Can't open "<<input<<endl; return 0; }
+  TFile* ifile = TFile::Open(input.c_str(),"READ");
+  if (!ifile) {  cout<<"Can't open "<<input<<endl; return 0; }
   
-  TFile* ofile = new TFile(output.c_str(),"RECREATE");
-  if (!ofile->IsOpen()) { cout<<"Can't create "<<output<<endl; return 0; }
+  TFile* ofile = TFile::Open(output.c_str(),"RECREATE");
+  if (!ofile) { cout<<"Can't create "<<output<<endl; return 0; }
 
   TIter next(ifile->GetListOfKeys());
   TKey* key(0);
@@ -238,8 +238,8 @@ int main(int argc,char**argv)
     map<TString,TH2D*> weightMap;
     if(!weightfile.IsNull())
     {
-       TFile* wfile = new TFile(weightfile,"READ");
-       if (!wfile->IsOpen()) { cout<<"Can't open "<<weightfile<<endl; }
+       TFile* wfile = TFile::Open(weightfile,"READ");
+       if (!wfile) { cout<<"Can't open "<<weightfile<<endl; }
        gDirectory->cd(alg.c_str());
        if(!doflavor)
        {
