@@ -96,20 +96,20 @@ int main(int argc,char**argv)
   // open output file
   //
   if(!outputDir.EndsWith("/")) outputDir+="/";
-  TFile* ofile = new TFile(outputDir+output,"RECREATE");
-  if (!ofile->IsOpen()) { cout<<"Can't create "<<output<<endl; return 0; }
+  TFile* ofile = TFile::Open(outputDir+output,"RECREATE");
+  if (!ofile) { cout<<"Can't create "<<output<<endl; return 0; }
   
   
   //
   // open input & l3input files and loop over directories (algorithms)
   //
-  TFile* ifile = new TFile(input.c_str(),"READ");
-  if (!ifile->IsOpen()) { cout<<"Can't open "<<input<<endl; return 0; }
+  TFile* ifile = TFile::Open(input.c_str(),"READ");
+  if (!ifile) { cout<<"Can't open "<<input<<endl; return 0; }
   
   TFile* l3file = 0;
   if (!l2l3) {
-    l3file = new TFile(l3input.c_str(),"READ");
-    if (!l3file->IsOpen()) {
+    l3file = TFile::Open(l3input.c_str(),"READ");
+    if (!l3file) {
       cout<<"Can't open "<<l3input<<endl;
       return 0;
     }
